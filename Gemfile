@@ -8,6 +8,7 @@ gem 'faker', '1.0.1'
 gem 'will_paginate', '3.0.3'
 gem 'bootstrap-will_paginate', '0.0.6'
 gem 'nokogiri', '1.5.3'
+gem 'annotate', '~> 2.4.1.beta'
 
 group :development, :test do
   gem 'sqlite3', '1.3.5'
