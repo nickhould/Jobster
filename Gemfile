@@ -13,6 +13,9 @@ gem 'annotate', '~> 2.4.1.beta'
 group :development, :test do
   gem 'sqlite3', '1.3.5'
   gem 'rspec-rails', '2.10.0'
+  gem 'growl'
+  gem 'ruby_gntp'
+  gem 'guard', '0.10.0'
   gem 'guard-rspec', '0.5.5'
 end
 
@@ -25,15 +28,15 @@ group :assets do
 end
 
 group :test do
+  gem 'rspec-rails', '2.10.0'
   gem 'capybara', '1.1.2'
   gem 'factory_girl_rails', '1.4.0'
   gem 'cucumber-rails', '1.2.1', :require => false
   gem 'database_cleaner', '0.7.0'
-  gem 'guard-spork', '0.3.2'  
+  gem 'guard-spork'
   gem 'spork', '0.9.0'
   gem 'launchy', '2.1.0'
-  # gem 'rb-fsevent', '0.9.1', :require => false
-  # gem 'growl', '1.0.3'
+  gem 'rb-fsevent', '0.9.1', :require => false
 end
 
 group :production do
