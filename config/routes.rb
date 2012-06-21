@@ -1,5 +1,9 @@
 Webjobs::Application.routes.draw do
 
+  resources :scrapers
+
+  resources :jobs
+
   root :to => 'static_pages#home'
   match '/contact',    to: 'static_pages#contact'
   match '/a_propos',    to: 'static_pages#about'
