@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @scraper.name %>
+</p>
+
+<p>
+  <b>Source:</b>
+  <%= @scraper.source %>
+</p>
+
+<p>
+  <b>Icon:</b>
+  <%= @scraper.icon %>
+</p>
+
+
+<%= link_to 'Edit', edit_scraper_path(@scraper) %> |
+<%= link_to 'Back', scrapers_path %>
