@@ -1,0 +1,2 @@
+class JobsScrapersController < ApplicationController
+end

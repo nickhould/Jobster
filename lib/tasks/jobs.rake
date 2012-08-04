@@ -6,7 +6,7 @@ require 'open-uri'
 namespace :fetch do
 
   desc "Fetch the jobs from all defined websites"
-  task :all
+  task :all => [:espresso_jobs, :grenier_jobs, :infopresse_jobs]
 
   desc "Fetch the jobs from Espresso-Jobs"
   task :espresso_jobs => :environment do
@@ -27,7 +27,9 @@ namespace :fetch do
               "Dec" => 12}
 
               
-    # Scrapper in action            
+    # Scraper
+
+Scraper in action            
     while page_number < number_of_pages_to_scrape+1 do
       page = Nokogiri::HTML(open("http://www.espresso-jobs.com/page/#{page_number}/"))  
       page.css('html body div#wrapper2 div#wrapper div#content-wrapper div#content div.post-wrapper').each do |post|
@@ -44,8 +46,11 @@ namespace :fetch do
           job = Job.create(:title         =>  title.capitalize,
                            :business      =>  business.capitalize,
                            :posted_at     =>  date_posted,
-                           :url           =>  job_url,
-                           :scrapper_id   =>  1 )
+                           :url           =>  job_url)
+
+          Job_scraper.create( job_id:     job.id,
+                                scraper_id: scraper.id)
+
         end    
       end   
       page_number += 1
@@ -71,7 +76,9 @@ namespace :fetch do
 
 
 
-    #Scrapper in action  
+    #Scraper
+
+Scraper in action  
     page = Nokogiri::HTML(open("http://www.grenier.qc.ca/emplois"))  
     page.css('html body.emplois div#bg_shadow div#container div#wrapper.clearfix div#content.clearfix div#main.list ul#emplois_postings li').each do |post|
 
@@ -112,13 +119,11 @@ namespace :fetch do
       date_posted =  year_posted.to_s + '-' + month_posted.to_s + '-' + day_posted.to_s
 
       if !business.empty?
-        job = Job.create(:title     => title.capitalize,
-                         :business  => business.capitalize,
-                         :date_scrapped => Time.now,
-                         :job_url       => job_url,
-                         :time_scrapped => Time.now.gmtime,
-                         :dposted => date_posted,
-                         :scrapper_id => 2 )
+        job = Job.create(:title         =>  title.capitalize,
+                         :business      =>  business.capitalize,
+                         :posted_at     =>  date_posted,
+                         :url           =>  job_url,
+                         :scraper_id    =>  2 )
       end
     end
     puts "Grenier-Jobs Scraped"
@@ -128,10 +133,26 @@ end
   task :infopresse_jobs => :environment do
 
     #Define variables and hashes
+    months = {"janvier" => 1, 
+              "février" => 2,
+              "mars" => 3,
+              "avril" => 4,
+              "mai" => 5,
+              "juin" => 6,
+              "juillet" => 7,
+              "août" => 8,
+              "septembre" => 9,
+              "octobre" => 10,
+              "novembre" => 11,
+              "décembre" => 12}
+              
+    #Define variables and hashes
     root_url = "http://www3.infopresse.com"
     x = 1
 
-    #Scrapper in action  
+    #Scraper
+
+Scraper in action  
     page = Nokogiri::HTML(open("http://www3.infopresse.com/jobs/"))  
     page.css('html body #wraper #page #main #main-inner #content-area div div.view-content ul.liste-postes li').each do |post|
 
@@ -155,19 +176,15 @@ end
         raw_business = post.css('span.bg-block-job dl.clear-block dd.job-regular span.job-info ul li.job-company').text
         raw_business =~ %r{(.*)\s\/(.*)}
         business =  raw_business[$1]
-        tag_list = title.split + business.split
         city = raw_business[$2]
         job_url = root_url.to_s + job_url_directory.to_s
 
         #Creating the job
-        job = Job.create(:title     => title.capitalize,
-                         :business  => business.capitalize,
-                         :date_scrapped => Time.now,
-                         :job_url       => job_url,
-                         :time_scrapped => Time.now.gmtime,
-                         :date_posted => date_posted,
-                         :scrapper_id => 3,
-                         :tag_list => tag_list)
+        job = Job.create(:title         =>  title.capitalize,
+                         :business      =>  business.capitalize,
+                         :posted_at     =>  date_posted,
+                         :url           =>  job_url
+                         :scraper_id    =>  3)
       end
     end
     puts "Infopresse-Jobs Scraped"

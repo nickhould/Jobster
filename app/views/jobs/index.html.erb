@@ -2,6 +2,7 @@
 
 <table>
   <tr>
+    <th></th>
     <th>Title</th>
     <th>Business</th>
     <th>Url</th>
@@ -13,6 +14,9 @@
 
 <% @jobs.each do |job| %>
   <tr>
+    <th><% job.scrapers.each do |scraper| %>
+         <%= link_to image_tag(scraper.icon.to_s) %>
+        <% end  %></th>
     <td><%= job.title %></td>
     <td><%= job.business %></td>
     <td><%= job.url %></td>
