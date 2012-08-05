@@ -2,7 +2,7 @@
 
 <table>
   <tr>
-    <th></th>
+    <th>Scraper</th>
     <th>Title</th>
     <th>Business</th>
     <th>Url</th>
@@ -14,12 +14,16 @@
 
 <% @jobs.each do |job| %>
   <tr>
-    <th><% job.scrapers.each do |scraper| %>
-         <%= link_to image_tag(scraper.icon.to_s) %>
-        <% end  %></th>
-    <td><%= job.title %></td>
-    <td><%= job.business %></td>
-    <td><%= job.url %></td>
+    <td>
+        <%  job.scrapers.each do |scraper| %>
+        <%=   image_tag("/assets/#{scraper.icon}") %>
+        <%  end %>
+    </td>
+    <td><%= job.title.capitalize %></td>
+    <td><%= job.business.capitalize %></td>
+    <td><%  job.jobs_scrapers.each do |job| %>
+        <%=   job.url %>
+        <%  end %></td>
     <td><%= job.posted_at %></td>
     <td><%= link_to 'Show', job %></td>
     <td><%= link_to 'Edit', edit_job_path(job) %></td>

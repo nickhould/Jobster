@@ -27,9 +27,7 @@ namespace :fetch do
               "Dec" => 12}
 
               
-    # Scraper
-
-Scraper in action            
+    # Scraper in action            
     while page_number < number_of_pages_to_scrape+1 do
       page = Nokogiri::HTML(open("http://www.espresso-jobs.com/page/#{page_number}/"))  
       page.css('html body div#wrapper2 div#wrapper div#content-wrapper div#content div.post-wrapper').each do |post|
@@ -43,13 +41,13 @@ Scraper in action
         year_posted = Time.now.year.to_s
         date_posted =  year_posted + '-' + month_posted + '-' + day_posted
         if !business.empty?
-          job = Job.create(:title         =>  title.capitalize,
-                           :business      =>  business.capitalize,
-                           :posted_at     =>  date_posted,
-                           :url           =>  job_url)
+          job = Job.create( title:       title.downcase,
+                            business:    business.downcase,
+                            posted_at:   date_posted)
 
-          Job_scraper.create( job_id:     job.id,
-                                scraper_id: scraper.id)
+          JobsScraper.create( job_id: job.id, 
+                              scraper_id: 1,
+                              url: job_url.downcase)
 
         end    
       end   
@@ -76,9 +74,7 @@ Scraper in action
 
 
 
-    #Scraper
-
-Scraper in action  
+    #Scraper in action  
     page = Nokogiri::HTML(open("http://www.grenier.qc.ca/emplois"))  
     page.css('html body.emplois div#bg_shadow div#container div#wrapper.clearfix div#content.clearfix div#main.list ul#emplois_postings li').each do |post|
 
@@ -119,11 +115,13 @@ Scraper in action
       date_posted =  year_posted.to_s + '-' + month_posted.to_s + '-' + day_posted.to_s
 
       if !business.empty?
-        job = Job.create(:title         =>  title.capitalize,
-                         :business      =>  business.capitalize,
-                         :posted_at     =>  date_posted,
-                         :url           =>  job_url,
-                         :scraper_id    =>  2 )
+        job = Job.create( title:     title.downcase,
+                          business:  business.downcase,
+                          posted_at: date_posted)
+
+        JobsScraper.create( job_id: job.id,
+                            scraper_id: 2,
+                            url: job_url.downcase)
       end
     end
     puts "Grenier-Jobs Scraped"
@@ -150,9 +148,7 @@ end
     root_url = "http://www3.infopresse.com"
     x = 1
 
-    #Scraper
-
-Scraper in action  
+    #Scraper in action  
     page = Nokogiri::HTML(open("http://www3.infopresse.com/jobs/"))  
     page.css('html body #wraper #page #main #main-inner #content-area div div.view-content ul.liste-postes li').each do |post|
 
@@ -180,11 +176,14 @@ Scraper in action
         job_url = root_url.to_s + job_url_directory.to_s
 
         #Creating the job
-        job = Job.create(:title         =>  title.capitalize,
-                         :business      =>  business.capitalize,
-                         :posted_at     =>  date_posted,
-                         :url           =>  job_url
-                         :scraper_id    =>  3)
+        job = Job.create( title:     title.downcase,
+                          business:  business.downcase,
+                          posted_at: date_posted)
+
+        JobsScraper.create( job_id: job.id, 
+                            scraper_id: 3,
+                            url: job_url.downcase)
+
       end
     end
     puts "Infopresse-Jobs Scraped"

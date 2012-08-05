@@ -8,19 +8,21 @@
 
 # Scrapers
 
-Scraper.create( id: 		1, 
+espresso_jobs = Scraper.create( id: 		1, 
 								name:   "Espresso-Jobs", 
                 source: "http://www.espresso-jobs.com/",
-                icon:   "/espresso_icon.png")
+                icon:   "espresso_icon.png")
 
 
-Scraper.create( id: 	  2,
+grenier = Scraper.create( id: 	  2,
 								name:   "Grenier aux Emplois", 
                 source: "http://www.grenier.qc.ca/emplois",
-                icon: 	"/grenier_icon.jpg")
+                icon: 	"grenier_icon.jpg")
 
 
-Scraper.create( id: 		3,
+infopresse = Scraper.create( id: 		3,
 								name: 	"Infopresse", 
                 source: "http://www3.infopresse.com/jobs/",
-                icon: 	"/infopresse_icon.png")
+                icon: 	"infopresse_icon.png")
+
+puts "Done fetching data."

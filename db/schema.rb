@@ -11,22 +11,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120622023054) do
-
-  create_table "job_scrapers", :force => true do |t|
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-    t.integer  "job_id"
-    t.integer  "scraper_id"
-  end
+ActiveRecord::Schema.define(:version => 20120805021234) do
 
   create_table "jobs", :force => true do |t|
     t.string   "title"
     t.string   "business"
-    t.string   "url"
     t.datetime "posted_at"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "jobs_scrapers", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.integer  "job_id"
+    t.integer  "scraper_id"
+    t.string   "url"
   end
 
   create_table "scrapers", :force => true do |t|
